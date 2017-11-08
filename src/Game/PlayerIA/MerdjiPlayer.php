@@ -41,8 +41,49 @@ class MerdjiPlayer extends Player
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
 
-        $choice = parent::scissorsChoice();
+        $scissors = parent::scissorsChoice();
+        $paper = parent::paperChoice();
+        $rock = parent::rockChoice();
 
-        return $choice;
+        if ($this->result->getNbRound() === 0){
+            return $paper;
+        }
+
+        $myChoices = $this->result->getChoicesFor($this->mySide);
+        $opponentChoices = $this->result->getChoicesFor($this->opponentSide);
+
+        $p = 0;
+        $r = 0;
+        $s = 0;
+        foreach ($opponentChoices as $value){
+            if ($value === "paper"){
+                $p = $p + 1;
+            }
+            if ($value === "scissors"){
+                $s = $s + 1;
+            }
+            if ($value === "rock"){
+                $r = $r + 1;
+            }
+        }
+        if ($p >= $r && $r >= $s){
+            return $paper;
+        }
+        if ($p >= $s && $s >= $r){
+            return $paper;
+        }
+        if ($s >= $r && $r >= $p){
+            return $scissors;
+        }
+        if ($s >= $p && $p >= $r){
+            return $scissors;
+        }
+        if ($r >= $s && $s >= $p){
+            return $rock;
+        }
+        if ($r >= $p && $p >= $s){
+            return $rock;
+        }
+        return $paper;
     }
 };
