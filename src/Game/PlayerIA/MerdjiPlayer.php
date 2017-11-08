@@ -55,6 +55,17 @@ class MerdjiPlayer extends Player
         $p = 0;
         $r = 0;
         $s = 0;
+
+        if ($this->result->getLastChoiceFor($this->mySide) == "paper" && $this->result->getLastChoiceFor($this->opponentSide) == "scissors"){
+            return $rock;
+        }
+        if ($this->result->getLastChoiceFor($this->mySide) == "scissors" && $this->result->getLastChoiceFor($this->opponentSide) == "rock"){
+            return $paper;
+        }
+        if ($this->result->getLastChoiceFor($this->mySide) == "rock" && $this->result->getLastChoiceFor($this->opponentSide) == "paper"){
+            return $scissors;
+        }
+
         foreach ($opponentChoices as $value){
             if ($value === "paper"){
                 $p = $p + 1;
