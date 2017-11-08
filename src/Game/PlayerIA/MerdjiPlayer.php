@@ -41,6 +41,7 @@ class MerdjiPlayer extends Player
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
 
+        //THANKS ROBIN!!!
         $scissors = parent::scissorsChoice();
         $paper = parent::paperChoice();
         $rock = parent::rockChoice();
@@ -82,6 +83,7 @@ class MerdjiPlayer extends Player
         }
 
         if ($p >= $r && $p >= $s){
+            //paper win against rock bug generally the opponenet do not twice the same choice
             if ($this->result->getLastChoiceFor($this->opponentSide) == "rock"){
                 return $rock;
             }
