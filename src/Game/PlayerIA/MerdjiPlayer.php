@@ -49,13 +49,7 @@ class MerdjiPlayer extends Player
             return $paper;
         }
 
-        $myChoices = $this->result->getChoicesFor($this->mySide);
-        $opponentChoices = $this->result->getChoicesFor($this->opponentSide);
-
-        $p = 0;
-        $r = 0;
-        $s = 0;
-
+        //if the opponent won the last round and if he repats the same choice in this round => i win.
         if ($this->result->getLastChoiceFor($this->mySide) == "paper" && $this->result->getLastChoiceFor($this->opponentSide) == "scissors"){
             return $rock;
         }
@@ -66,6 +60,15 @@ class MerdjiPlayer extends Player
             return $scissors;
         }
 
+        $myChoices = $this->result->getChoicesFor($this->mySide);
+        $opponentChoices = $this->result->getChoicesFor($this->opponentSide);
+
+        $p = 0;
+        $r = 0;
+        $s = 0;
+
+        
+        //I return the choice which win against the most used opponent choice
         foreach ($opponentChoices as $value){
             if ($value === "paper"){
                 $p = $p + 1;
@@ -77,24 +80,28 @@ class MerdjiPlayer extends Player
                 $r = $r + 1;
             }
         }
-        if ($p >= $r && $r >= $s){
+
+        if ($p >= $r && $p >= $s){
+            if ($this->result->getLastChoiceFor($this->opponentSide) == "rock"){
+                return $rock;
+            }
             return $paper;
         }
-        if ($p >= $s && $s >= $r){
-            return $paper;
-        }
-        if ($s >= $r && $r >= $p){
+
+        if ($s >= $r && $s >= $p){
+            if ($this->result->getLastChoiceFor($this->opponentSide) == "paper"){
+                return $paper;
+            }
             return $scissors;
         }
-        if ($s >= $p && $p >= $r){
-            return $scissors;
-        }
-        if ($r >= $s && $s >= $p){
+    
+        if ($r >= $s && $r >= $p){
+            if ($this->result->getLastChoiceFor($this->opponentSide) == "scissors"){
+                return $scissors;
+            }
             return $rock;
         }
-        if ($r >= $p && $p >= $s){
-            return $rock;
-        }
+
         return $paper;
     }
 };
